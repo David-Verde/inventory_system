@@ -1,9 +1,51 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+puts "Limpiando la base de datos..."
+Transferencia.destroy_all
+Articulo.destroy_all
+Persona.destroy_all
+Modelo.destroy_all
+Marca.destroy_all
+
+puts "Creando Marcas y Modelos..."
+apple = Marca.create!(nombre: "Apple")
+samsung = Marca.create!(nombre: "Samsung")
+dell = Marca.create!(nombre: "Dell")
+
+Modelo.create!(marca: apple, nombre: "MacBook Pro 16")
+Modelo.create!(marca: apple, nombre: "iPhone 15 Pro")
+Modelo.create!(marca: samsung, nombre: "Galaxy S24 Ultra")
+Modelo.create!(marca: dell, nombre: "XPS 15")
+Modelo.create!(marca: dell, nombre: "Latitude 7420")
+
+puts "Creando Personas y Artículos..."
+juan = Persona.create!(nombre: "Juan", apellido: "Perez")
+maria = Persona.create!(nombre: "Maria", apellido: "Gomez")
+carlos = Persona.create!(nombre: "Carlos", apellido: "Rodriguez")
+
+macbook = Articulo.create!(modelo: Modelo.find_by(nombre: "MacBook Pro 16"), fecha_ingreso: Date.today - 30, persona: juan)
+Transferencia.create!(articulo: macbook, persona: juan)
+
+iphone = Articulo.create!(modelo: Modelo.find_by(nombre: "iPhone 15 Pro"), fecha_ingreso: Date.today - 15, persona: juan)
+Transferencia.create!(articulo: iphone, persona: juan)
+
+galaxy = Articulo.create!(modelo: Modelo.find_by(nombre: "Galaxy S24 Ultra"), fecha_ingreso: Date.today - 5, persona: maria)
+Transferencia.create!(articulo: galaxy, persona: maria)
+
+
+dell_xps = Articulo.create!(
+  modelo: Modelo.find_by(nombre: "XPS 15"), 
+  fecha_ingreso: Date.today - 60,
+  persona: carlos
+)
+Transferencia.create!(articulo: dell_xps, persona: carlos)
+
+dell_latitude = Articulo.create!(
+  modelo: Modelo.find_by(nombre: "Latitude 7420"), 
+  fecha_ingreso: Date.today - 90,
+  persona: carlos
+)
+Transferencia.create!(articulo: dell_latitude, persona: carlos)
+
+puts "Base de datos inicializada con datos de ejemplo."
+
+macbook.update!(persona: maria)
+Transferencia.create!(articulo: macbook, persona: maria)
