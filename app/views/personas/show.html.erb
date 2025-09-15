@@ -1,10 +1,36 @@
-<p style="color: green"><%= notice %></p>
-
+<%# app/views/personas/show.html.erb %>
 <%= render @persona %>
 
 <div>
-  <%= link_to "Edit this persona", edit_persona_path(@persona) %> |
-  <%= link_to "Back to personas", personas_path %>
+  <h3>Artículos que porta actualmente</h3>
+  <ul>
+    <% @persona.articulos.each do |articulo| %>
+      <li><%= link_to "#{articulo.modelo.marca.nombre} #{articulo.modelo.nombre}", articulo %></li>
+    <% end %>
+  </ul>
 
-  <%= button_to "Destroy this persona", @persona, method: :delete %>
+  <h3>Historial de artículos portados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha de Transferencia</th>
+        <th>Artículo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @persona.transferencias.order(created_at: :desc).each do |transferencia| %>
+        <tr>
+          <td><%= l(transferencia.created_at, format: :long) %></td>
+          <td><%= link_to "#{transferencia.articulo.modelo.marca.nombre} #{transferencia.articulo.modelo.nombre}", transferencia.articulo %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to "Editar esta persona", edit_persona_path(@persona) %> |
+  <%= link_to "Volver a personas", personas_path %>
+
+  <%= button_to "Eliminar esta persona", @persona, method: :delete %>
 </div>

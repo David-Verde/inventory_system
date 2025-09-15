@@ -1,10 +1,35 @@
-<p style="color: green"><%= notice %></p>
-
+<%# app/views/articulos/show.html.erb %>
 <%= render @articulo %>
 
 <div>
-  <%= link_to "Edit this articulo", edit_articulo_path(@articulo) %> |
-  <%= link_to "Back to articulos", articulos_path %>
+  <p>
+    <strong>Portador Actual:</strong>
+    <%= @articulo.persona&.nombre_completo || "Sin portador asignado" %>
+  </p>
 
-  <%= button_to "Destroy this articulo", @articulo, method: :delete %>
+  <h3>Historial de Portadores</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha de Transferencia</th>
+        <th>Portador</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articulo.transferencias.order(created_at: :desc).each do |transferencia| %>
+        <tr>
+          <td><%= l(transferencia.created_at, format: :long) %></td>
+          <td><%= transferencia.persona.nombre_completo %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <br>
+  
+  <%= link_to "Registrar Nueva Transferencia", new_articulo_transferencia_path(@articulo) %> |
+  <%= link_to "Editar este artículo", edit_articulo_path(@articulo) %> |
+  <%= link_to "Volver a artículos", articulos_path %>
+  
+  <%= button_to "Eliminar este artículo", @articulo, method: :delete %>
 </div>

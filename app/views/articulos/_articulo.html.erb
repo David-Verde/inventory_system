@@ -6,12 +6,11 @@
 
   <p>
     <strong>Modelo:</strong>
-    <%= articulo.modelo_id %>
+    <%= articulo.modelo.marca.nombre %> <%= articulo.modelo.nombre %>
   </p>
 
   <p>
     <strong>Persona:</strong>
-    <%= articulo.persona_id %>
+    <%= articulo.persona&.nombre_completo %>
   </p>
-
 </div>
