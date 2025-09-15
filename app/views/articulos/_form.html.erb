@@ -1,0 +1,32 @@
+<%= form_with(model: articulo) do |form| %>
+  <% if articulo.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(articulo.errors.count, "error") %> prohibited this articulo from being saved:</h2>
+
+      <ul>
+        <% articulo.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :fecha_ingreso, style: "display: block" %>
+    <%= form.date_field :fecha_ingreso %>
+  </div>
+
+  <div>
+    <%= form.label :modelo_id, style: "display: block" %>
+    <%= form.text_field :modelo_id %>
+  </div>
+
+  <div>
+    <%= form.label :persona_id, style: "display: block" %>
+    <%= form.text_field :persona_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
