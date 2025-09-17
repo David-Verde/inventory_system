@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html class="h-full">
+<html lang="es" class="h-full">
   <head>
     <title>InventorySystem</title>
+    <meta name="description" content="Un sistema de control de inventario para gestionar artículos, personas y transferencias. Desarrollado con Ruby on Rails.">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script>
       if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -46,7 +47,7 @@
               <% end %>
 
               <div data-controller="theme" class="ml-4">
-                <button type="button" data-action="click->theme#toggle" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <button type="button" aria-label="Cambiar tema de color" data-action="click->theme#toggle" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <svg data-theme-target="sunIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.908-2.636l1.591-1.591M3 12H.75m2.636-4.908l1.591 1.591M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15z" /></svg>
                   <svg data-theme-target="moonIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25c0 5.385 4.365 9.75 9.75 9.75 2.597 0 4.965-.992 6.752-2.624z" /></svg>
                 </button>
@@ -71,7 +72,7 @@
           </div>
 
           <div class="border-t border-gray-700 pb-3 pt-4 px-2" data-controller="theme">
-            <button type="button" data-action="click->theme#toggle" class="w-full flex items-center justify-start rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
+            <button type="button" aria-label="Cambiar tema de color" data-action="click->theme#toggle" class="w-full flex items-center justify-start rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
               <svg data-theme-target="sunIcon" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.908-2.636l1.591-1.591M3 12H.75m2.636-4.908l1.591 1.591M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15z" /></svg>
               <svg data-theme-target="moonIcon" class="hidden h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25c0 5.385 4.365 9.75 9.75 9.75 2.597 0 4.965-.992 6.752-2.624z" /></svg>
               <span class="text-base font-medium">Cambiar Tema</span>

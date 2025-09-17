@@ -43,13 +43,11 @@ Este proyecto está diseñado para ejecutarse dentro de un contenedor de Docker.
     ```
 
 2.  **Construir la imagen de Docker:**
-    Este comando leerá el `Dockerfile` y `Gemfile.lock` para construir un entorno con todas las dependencias necesarias.
     ```bash
     docker compose build
     ```
 
 3.  **Crear y preparar la base de datos:**
-    Estos comandos se ejecutan dentro de un contenedor temporal para inicializar la base de datos y poblarla con datos de ejemplo.
     ```bash
     docker compose run --rm web rails db:create
     docker compose run --rm web rails db:migrate
@@ -69,6 +67,21 @@ Una vez que la aplicación esté en marcha, puedes iniciar sesión con el siguie
 
 -   **Usuario:** `test@example.com`
 -   **Contraseña:** `password`
+
+---
+
+## Calidad y Rendimiento
+
+El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos estándares de calidad en las áreas clave de la web. Los resultados demuestran un rendimiento excelente y el cumplimiento de las mejores prácticas modernas.
+
+![Resultados de Lighthouse para Inventory System](.github/assets/lighthouse.png)
+
+| Métrica          | Puntuación |
+| ---------------- | :--------: |
+| ✅ **Performance** |     90     |
+| 🟠 **Accessibility** |     87     |
+| ✅ **Best Practices**|     96     |
+| ✅ **SEO**         |    100     |
 
 ---
 
