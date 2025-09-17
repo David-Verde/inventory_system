@@ -2,6 +2,8 @@ require "test_helper"
 
 class ModelosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    login_as(@user)
     @modelo = modelos(:one)
   end
 

@@ -1,0 +1,28 @@
+<div class="max-w-md mx-auto">
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <h1 class="text-2xl font-bold mb-6">Sign in</h1>
+
+    <%= form_with(url: session_path, scope: :user, class: "space-y-6") do |form| %>
+      <div>
+        <%= form.label :email_address, "Correo electrónico", class: "block mb-2 text-sm font-medium" %>
+        <%= form.email_field :email_address, required: true, autofocus: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "block mb-2 text-sm font-medium" %>
+        <%= form.password_field :password, required: true, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" %>
+      </div>
+      
+      <div class="flex items-center justify-between">
+        <%= form.submit "Sign in", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+        <div class="text-sm">
+          <%= link_to "Forgot password?", new_password_path, class: "font-medium text-blue-600 hover:underline dark:text-blue-500" %>
+        </div>
+      </div>
+      
+      <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-4">
+        Don't have an account yet? <%= link_to "Sign up", sign_up_path, class: "font-medium text-blue-600 hover:underline dark:text-blue-500" %>
+      </p>
+    <% end %>
+  </div>
+</div>

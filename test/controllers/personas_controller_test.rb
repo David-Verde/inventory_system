@@ -2,6 +2,8 @@ require "test_helper"
 
 class PersonasControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    login_as(@user)
     @persona = personas(:one)
   end
 

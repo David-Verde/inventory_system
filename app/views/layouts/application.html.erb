@@ -35,9 +35,17 @@
                 </div>
               </div>
             </div>
-            <div class="hidden md:flex md:items-center">
-              
-              <div data-controller="theme">
+            <div class="hidden md:flex md:items-center ml-4">
+              <% if authenticated? %>
+                <%= link_to "Cerrar sesión", session_path, data: { turbo_method: :delete }, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+              <% else %>
+                <div class="flex items-baseline space-x-4">
+                  <%= link_to "Iniciar sesión", new_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+                  <%= link_to "Registrarse", sign_up_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" %>
+                </div>
+              <% end %>
+
+              <div data-controller="theme" class="ml-4">
                 <button type="button" data-action="click->theme#toggle" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <svg data-theme-target="sunIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.908-2.636l1.591-1.591M3 12H.75m2.636-4.908l1.591 1.591M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15z" /></svg>
                   <svg data-theme-target="moonIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25c0 5.385 4.365 9.75 9.75 9.75 2.597 0 4.965-.992 6.752-2.624z" /></svg>
@@ -68,6 +76,16 @@
               <svg data-theme-target="moonIcon" class="hidden h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25c0 5.385 4.365 9.75 9.75 9.75 2.597 0 4.965-.992 6.752-2.624z" /></svg>
               <span class="text-base font-medium">Cambiar Tema</span>
             </button>
+          </div>
+          <div class="border-t border-gray-700 pb-3 pt-3">
+            <div class="space-y-1 px-2">
+              <% if authenticated? %>
+                <%= link_to "Cerrar sesión", session_path, data: { turbo_method: :delete }, class: "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium" %>
+              <% else %>
+                <%= link_to "Iniciar sesión", new_session_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium" %>
+                <%= link_to "Registrarse", sign_up_path, class: "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium" %>
+              <% end %>
+            </div>
           </div>
         </div>
       </nav>

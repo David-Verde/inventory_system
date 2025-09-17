@@ -2,6 +2,8 @@ require "test_helper"
 
 class MarcasControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    login_as(@user)
     @marca = marcas(:one)
   end
 
@@ -17,7 +19,7 @@ class MarcasControllerTest < ActionDispatch::IntegrationTest
 
   test "should create marca" do
     assert_difference("Marca.count") do
-      post marcas_url, params: { marca: { nombre: @marca.nombre } }
+      post marcas_url, params: { marca: { nombre: "Nueva Marca Para Test" } }
     end
 
     assert_redirected_to marca_url(Marca.last)
@@ -34,7 +36,7 @@ class MarcasControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update marca" do
-    patch marca_url(@marca), params: { marca: { nombre: @marca.nombre } }
+    patch marca_url(@marca), params: { marca: { nombre: "Marca Actualizada" } }
     assert_redirected_to marca_url(@marca)
   end
 

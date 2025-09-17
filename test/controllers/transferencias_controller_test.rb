@@ -1,13 +1,14 @@
 require "test_helper"
 
 class TransferenciasControllerTest < ActionDispatch::IntegrationTest
-  test "should get new" do
-    get transferencias_new_url
-    assert_response :success
+  setup do
+    @user = users(:one)
+    login_as(@user)
+    @articulo = articulos(:one)
   end
 
-  test "should get create" do
-    get transferencias_create_url
+  test "should get new" do
+    get new_articulo_transferencia_url(@articulo)
     assert_response :success
   end
 end

@@ -2,6 +2,8 @@ require "test_helper"
 
 class ArticulosControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    login_as(@user)
     @articulo = articulos(:one)
   end
 
