@@ -1,12 +1,5 @@
-<% content_for :title, "Editing articulo" %>
-
-<h1>Editing articulo</h1>
-
-<%= render "form", articulo: @articulo %>
-
-<br>
-
-<div>
-  <%= link_to "Show this articulo", @articulo %> |
-  <%= link_to "Back to articulos", articulos_path %>
+<div class="max-w-xl mx-auto">
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <%= render "form", articulo: @articulo %>
+  </div>
 </div>

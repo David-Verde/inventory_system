@@ -38,4 +38,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # 10. El comando por defecto
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/dev"]

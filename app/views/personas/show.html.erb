@@ -1,36 +1,68 @@
-<%# app/views/personas/show.html.erb %>
-<%= render @persona %>
+<div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  <div class="p-6">
+    <%# Encabezado con el nombre de la persona y los botones de acción %>
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"><%= @persona.nombre_completo %></h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">ID: <%= @persona.id %></p>
+      </div>
+      <div class="flex items-center space-x-3 mt-4 sm:mt-0">
+        <%= link_to "Editar", edit_persona_path(@persona), class: "py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" %>
+        <%= button_to "Eliminar", @persona, method: :delete, data: { confirm: '¿Estás seguro?' }, class: "text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800" %>
+      </div>
+    </div>
 
-<div>
-  <h3>Artículos que porta actualmente</h3>
-  <ul>
-    <% @persona.articulos.each do |articulo| %>
-      <li><%= link_to "#{articulo.modelo.marca.nombre} #{articulo.modelo.nombre}", articulo %></li>
-    <% end %>
-  </ul>
+    <hr class="my-6 border-gray-200 dark:border-gray-700">
 
-  <h3>Historial de artículos portados</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Fecha de Transferencia</th>
-        <th>Artículo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @persona.transferencias.order(created_at: :desc).each do |transferencia| %>
-        <tr>
-          <td><%= l(transferencia.created_at, format: :long) %></td>
-          <td><%= link_to "#{transferencia.articulo.modelo.marca.nombre} #{transferencia.articulo.modelo.nombre}", transferencia.articulo %></td>
-        </tr>
+    <%# Sección de Artículos Actuales - BLOQUE CORREGIDO %>
+    <div>
+      <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Artículos que porta actualmente</h2>
+      <% if @persona.articulos.any? %>
+        <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-400">
+          <% @persona.articulos.each do |articulo| %>
+            <li>
+              <%= link_to "#{articulo.modelo.marca.nombre} #{articulo.modelo.nombre}", articulo, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-gray-500 dark:text-gray-400">Este usuario no tiene ningún artículo asignado actualmente.</p>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+    
+    <hr class="my-8 border-gray-200 dark:border-gray-700">
 
-  <br>
+    <%# Sección de Historial de Transferencias %>
+    <div>
+      <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Historial de artículos portados</h2>
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3">Fecha de Transferencia</th>
+              <th scope="col" class="px-6 py-3">Artículo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @persona.transferencias.order(created_at: :desc).each do |transferencia| %>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-6 py-4">
+                  <%= l(transferencia.created_at, format: :long) %>
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <%= link_to "#{transferencia.articulo.modelo.marca.nombre} #{transferencia.articulo.modelo.nombre}", transferencia.articulo, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <%= link_to "Editar esta persona", edit_persona_path(@persona) %> |
-  <%= link_to "Volver a personas", personas_path %>
-
-  <%= button_to "Eliminar esta persona", @persona, method: :delete %>
+    <div class="flex items-center mt-8 space-x-3">
+      <%= link_to "Volver a Usuarios", personas_path, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    </div>
+  </div>
 </div>
+
+<%#= render @persona %>

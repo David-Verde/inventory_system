@@ -1,0 +1,38 @@
+<% content_for :title, @marca.nombre %>
+
+<div class="max-w-4xl mx-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  <div class="p-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white"><%= @marca.nombre %></h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">ID: <%= @marca.id %></p>
+      </div>
+      <div class="flex items-center space-x-3 mt-4 sm:mt-0">
+        <%= link_to "Editar", edit_marca_path(@marca), class: "py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" %>
+        <%= button_to "Eliminar", @marca, method: :delete, data: { confirm: '¿Estás seguro?' }, class: "text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800" %>
+      </div>
+    </div>
+
+    <hr class="my-6 border-gray-200 dark:border-gray-700">
+
+    <%# Sección de Modelos de esta marca %>
+    <div>
+      <h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Modelos de esta marca</h2>
+      <% if @marca.modelos.any? %>
+        <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-400">
+          <% @marca.modelos.each do |modelo| %>
+            <li>
+              <%= link_to modelo.nombre, modelo, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-gray-500 dark:text-gray-400">Esta marca no tiene modelos asociados.</p>
+      <% end %>
+    </div>
+
+    <div class="flex items-center mt-8 space-x-3">
+      <%= link_to "Volver a marcas", marcas_path, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    </div>
+  </div>
+</div>

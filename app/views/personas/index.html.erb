@@ -1,16 +1,19 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Personas" %>
-
-<h1>Personas</h1>
-
-<div id="personas">
-  <% @personas.each do |persona| %>
-    <%= render persona %>
-    <p>
-      <%= link_to "Show this persona", persona %>
-    </p>
-  <% end %>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white" data-theme="title">Usuarios</h1>
+  <%= link_to "Nuevo Usuario", new_persona_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150" %>
 </div>
 
-<%= link_to "New persona", new_persona_path %>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @personas.each do |persona| %>
+    <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="flex flex-col items-center pb-10 pt-8">
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white"><%= persona.nombre_completo %></h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">Porta <%= pluralize(persona.articulos.count, "artículo") %></span>
+        <div class="flex mt-4 space-x-3 md:mt-6">
+          <%= link_to "Ver Detalles", persona, class: "inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+          <%= link_to "Editar", edit_persona_path(persona), class: "inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -5,18 +5,17 @@ version: '3.8'
 services:
   web:
     build: .
-    # El comando que se pasa a entrypoint.sh
-    command: bash -c "bundle exec rails s -b 0.0.0.0"
+  
+
     
-    # Monta tu código local dentro del contenedor.
-    # Cualquier cambio que hagas en tu editor se reflejará instantáneamente.
+
     volumes:
       - .:/rails
       
-    # Mapea el puerto 3000 de tu máquina al puerto 3000 del contenedor
+
     ports:
       - "3000:3000"
       
-    # Asegura que la terminal se mantenga abierta
+
     stdin_open: true
     tty: true

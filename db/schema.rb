@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_212611) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_16_180847) do
   create_table "articulos", force: :cascade do |t|
     t.date "fecha_ingreso"
     t.integer "modelo_id", null: false
-    t.integer "persona_id", null: false
+    t.integer "persona_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["modelo_id"], name: "index_articulos_on_modelo_id"

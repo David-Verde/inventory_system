@@ -1,0 +1,33 @@
+<%= form_with(model: modelo, class: "space-y-6") do |form| %>
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white"><%= modelo.new_record? ? "Nuevo Modelo" : "Editando Modelo" %></h1>
+  
+  <% if modelo.errors.any? %>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+      <h2 class="font-bold"><%= pluralize(modelo.errors.count, "error") %> prohibited this modelo from being saved:</h2>
+      <ul class="mt-1 list-disc list-inside">
+        <% modelo.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nombre, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :nombre, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= form.label :marca_id, "Marca", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.collection_select :marca_id, Marca.all.order(:nombre), :id, :nombre, { prompt: "Seleccione una marca" }, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+  </div>
+
+  <div class="flex items-center space-x-4">
+    <%= form.submit modelo.new_record? ? "Crear Modelo" : "Actualizar Modelo", class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+    <% if modelo.persisted? %>
+      <%= link_to "Volver", modelo, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    <% else %>
+      <%= link_to "Volver", modelos_path, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    <% end %>
+  </div>
+<% end %>

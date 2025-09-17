@@ -1,27 +1,23 @@
-<%= form_with(model: persona) do |form| %>
-  <% if persona.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(persona.errors.count, "error") %> prohibited this persona from being saved:</h2>
-
-      <ul>
-        <% persona.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with(model: persona, class: "space-y-6") do |form| %>
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white" ><%= persona.new_record? ? "Nuevo Usuario" : "Editando Usuario" %></h1>
+  
   <div>
-    <%= form.label :nombre, style: "display: block" %>
-    <%= form.text_field :nombre %>
+    <%= form.label :nombre, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :nombre, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
   </div>
 
   <div>
-    <%= form.label :apellido, style: "display: block" %>
-    <%= form.text_field :apellido %>
+    <%= form.label :apellido, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :apellido, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="flex items-center space-x-4">
+    <%= form.submit class: "cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" %>
+    <%# Si el objeto es nuevo, vuelve al index. Si se está editando, vuelve al 'show' de ese objeto. %>
+    <% if persona.persisted? %>
+      <%= link_to "Volver", persona, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    <% else %>
+      <%= link_to "Volver", personas_path, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+    <% end %>
   </div>
 <% end %>

@@ -1,16 +1,31 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Articulos" %>
-
-<h1>Articulos</h1>
-
-<div id="articulos">
-  <% @articulos.each do |articulo| %>
-    <%= render articulo %>
-    <p>
-      <%= link_to "Show this articulo", articulo %>
-    </p>
-  <% end %>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white" data-theme="title">Artículos</h1>
+  <%= link_to "Nuevo Artículo", new_articulo_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150" %>
 </div>
 
-<%= link_to "New articulo", new_articulo_path %>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">Marca y Modelo</th>
+        <th scope="col" class="px-6 py-3">Fecha de Ingreso</th>
+        <th scope="col" class="px-6 py-3">Portador Actual</th>
+        <th scope="col" class="px-6 py-3"><span class="sr-only">Acciones</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articulos.each do |articulo| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= articulo.modelo.marca.nombre %> <%= articulo.modelo.nombre %>
+          </th>
+          <td class="px-6 py-4"><%= l(articulo.fecha_ingreso, format: :default) %></td>
+          <td class="px-6 py-4"><%= articulo.persona&.nombre_completo || "Sin portador" %></td>
+          <td class="px-6 py-4 text-right">
+            <%= link_to "Ver", articulo, class: "font-medium text-blue-600 dark:text-blue-500 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
