@@ -8,12 +8,12 @@ class TransferenciasController < ApplicationController
 
   def create
     @transferencia = @articulo.transferencias.new(transferencia_params)
-    
+
     ActiveRecord::Base.transaction do
       @articulo.update!(persona_id: @transferencia.persona_id)
       @transferencia.save!
     end
-    
+
     redirect_to @articulo, notice: "Artículo transferido con éxito."
   rescue ActiveRecord::RecordInvalid
     @personas = Persona.all

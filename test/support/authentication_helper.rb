@@ -1,5 +1,4 @@
 module AuthenticationHelper
-
   def login_as(user, password: "password")
     post session_path, params: {
       user: {

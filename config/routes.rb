@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :modelos
 
   resources :articulos do
-    resources :transferencias, only: [:new, :create]
+    resources :transferencias, only: [ :new, :create ]
   end
   resources :personas
   get "sign_up", to: "registrations#new"

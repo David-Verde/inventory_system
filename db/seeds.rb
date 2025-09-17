@@ -40,14 +40,14 @@ galaxy = Articulo.create!(modelo: Modelo.find_by(nombre: "Galaxy S24 Ultra"), fe
 Transferencia.create!(articulo: galaxy, persona: maria)
 
 dell_xps = Articulo.create!(
-  modelo: Modelo.find_by(nombre: "XPS 15"), 
+  modelo: Modelo.find_by(nombre: "XPS 15"),
   fecha_ingreso: Date.today - 60,
   persona: carlos
 )
 Transferencia.create!(articulo: dell_xps, persona: carlos)
 
 dell_latitude = Articulo.create!(
-  modelo: Modelo.find_by(nombre: "Latitude 7420"), 
+  modelo: Modelo.find_by(nombre: "Latitude 7420"),
   fecha_ingreso: Date.today - 90,
   persona: carlos
 )
