@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_145409) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_26_153920) do
   create_table "articulos", force: :cascade do |t|
     t.date "fecha_ingreso"
     t.integer "modelo_id", null: false
@@ -65,7 +65,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_145409) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin"
+    t.integer "persona_id"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["persona_id"], name: "index_users_on_persona_id"
   end
 
   add_foreign_key "articulos", "modelos"
@@ -74,4 +77,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_145409) do
   add_foreign_key "sessions", "users"
   add_foreign_key "transferencias", "articulos"
   add_foreign_key "transferencias", "personas"
+  add_foreign_key "users", "personas"
 end

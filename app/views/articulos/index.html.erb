@@ -1,6 +1,8 @@
 <div class="flex justify-between items-center mb-6">
   <h1 class="text-2xl font-bold text-gray-900 dark:text-white" data-theme="title">Artículos</h1>
-  <%= link_to "Nuevo Artículo", new_articulo_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150" %>
+  <% if policy(Articulo).new? %>
+    <%= link_to "Nuevo Artículo", new_articulo_path, class: "inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150" %>
+  <% end %>
 </div>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

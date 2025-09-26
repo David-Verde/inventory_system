@@ -1,40 +1,53 @@
 class PersonasController < ApplicationController
   before_action :set_persona, only: %i[ show edit update destroy ]
 
-  # GET /personas or /personas.json
   def index
     @personas = Persona.all
   end
 
-  # GET /personas/1 or /personas/1.json
   def show
   end
 
-  # GET /personas/new
   def new
     @persona = Persona.new
   end
 
-  # GET /personas/1/edit
   def edit
   end
 
-  # POST /personas or /personas.json
   def create
+    authorize Persona
+
     @persona = Persona.new(persona_params)
+    email = params[:email]
+
+    ActiveRecord::Base.transaction do
+      @persona.save!
+      
+      random_password = SecureRandom.hex(16)
+      
+      user = User.create!(
+        email_address: email,
+        persona: @persona,
+        password: random_password,
+        password_confirmation: random_password
+      )
+
+      PasswordsMailer.reset(user).deliver_later
+    end
 
     respond_to do |format|
-      if @persona.save
-        format.html { redirect_to @persona, notice: "Persona was successfully created." }
-        format.json { render :show, status: :created, location: @persona }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @persona.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @persona, notice: "Persona creada con éxito. Se ha enviado un correo de invitación para configurar la cuenta." }
+      format.json { render :show, status: :created, location: @persona }
+    end
+  rescue ActiveRecord::RecordInvalid => e
+    flash.now[:alert] = e.record.errors.full_messages.to_sentence
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity }
     end
   end
 
-  # PATCH/PUT /personas/1 or /personas/1.json
   def update
     respond_to do |format|
       if @persona.update(persona_params)
@@ -47,7 +60,6 @@ class PersonasController < ApplicationController
     end
   end
 
-  # DELETE /personas/1 or /personas/1.json
   def destroy
     @persona.destroy!
 
@@ -58,13 +70,11 @@ class PersonasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_persona
-      @persona = Persona.find(params.expect(:id))
+      @persona = Persona.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def persona_params
-      params.expect(persona: [ :nombre, :apellido ])
+      params.require(:persona).permit(:nombre, :apellido)
     end
 end

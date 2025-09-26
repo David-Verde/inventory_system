@@ -8,31 +8,32 @@ Aplicación web desarrollada con Ruby on Rails 8 para la gestión de artículos,
 - **Gestión de Personas:** Administración de las personas que pueden poseer artículos.
 - **Sistema de Transferencias:** Registro de la transferencia de un artículo de una persona a otra, manteniendo un historial completo.
 - **ABM de Marcas y Modelos:** Módulos dedicados para gestionar las marcas y modelos disponibles.
-- **Autenticación de Usuarios:** Sistema de registro e inicio de sesión para proteger el acceso a la aplicación.
-- **Interfaz Moderna y Responsiva:** UI desarrollada con Tailwind CSS y componentes de Flowbite, incluyendo un modo oscuro.
+- **Importación con IA:** Funcionalidad para crear Marcas y Modelos a partir de una imagen del producto, utilizando una API de IA para extraer la información.
+- **Sistema de Roles y Permisos:** Distinción entre usuarios Administradores (con acceso total) y usuarios Estándar (con vista restringida a sus propios artículos).
+- **Autenticación de Usuarios:** Sistema de registro, inicio de sesión e invitación para proteger el acceso a la aplicación.
+- **Interfaz Moderna y Responsiva:** UI desarrollada con Tailwind CSS, incluyendo un modo oscuro.
 
 ## Tecnologías Utilizadas
 
-- **Backend:** Ruby on Rails 8
+- **Backend:** Ruby on Rails 8, Pundit (para autorización).
 - **Base de Datos:** SQLite 3
 - **Frontend:**
   - Hotwire (Turbo & Stimulus)
   - Tailwind CSS
-  - Flowbite
-  - Alpine.js (para interacciones de UI)
+  - Alpine.js
 - **Entorno de Desarrollo:** Docker y Docker Compose
+- **Servicios Externos:** OpenRouter API (para la importación con IA).
 
 ---
 
 ## Puesta en Marcha (Instalación y Ejecución)
 
-Este proyecto está diseñado para ejecutarse dentro de un contenedor de Docker. No es necesario instalar Ruby o Rails en la máquina anfitriona.
+Este proyecto está diseñado para ejecutarse dentro de contenedores de Docker. No es necesario instalar Ruby o Rails en la máquina anfitriona.
 
 ### Prerrequisitos
 
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-  (Ambos vienen incluidos con la instalación de Docker Desktop)
+- [Docker](https://www.docker.com/) y [Docker Compose](https://docs.docker.com/compose/) (incluidos en Docker Desktop).
+- Una clave de API de [OpenRouter.ai](https://openrouter.ai/) para la funcionalidad de importación de imágenes.
 
 ### Pasos de Instalación
 
@@ -42,37 +43,53 @@ Este proyecto está diseñado para ejecutarse dentro de un contenedor de Docker.
     cd inventory_system
     ```
 
-2.  **Construir la imagen de Docker:**
+2.  **Configurar las variables de entorno:**
+    Copia el archivo de ejemplo `.env.example` a un nuevo archivo llamado `.env` y añade tu clave de API de OpenRouter.
+    ```bash
+    cp .env.example .env
+    # Ahora edita el archivo .env y pega tu clave
+    ```
+
+3.  **Construir las imágenes de Docker:**
+    Este comando leerá el `Dockerfile` y `Gemfile` para instalar todas las dependencias necesarias.
     ```bash
     docker compose build
     ```
 
-3.  **Crear y preparar la base de datos:**
+4.  **Crear y preparar la base de datos:**
+    Estos comandos se ejecutan dentro del contenedor de la aplicación.
     ```bash
-    docker compose run --rm web rails db:create
-    docker compose run --rm web rails db:migrate
+    docker compose run --rm web rails db:prepare
     docker compose run --rm web rails db:seed
     ```
+    *(Nota: `db:prepare` es un atajo que crea la base de datos, ejecuta las migraciones y restaura el esquema si es necesario).*
 
-4.  **Iniciar la aplicación:**
+5.  **Iniciar la aplicación:**
     ```bash
     docker compose up
     ```
 
-La aplicación estará disponible en tu navegador en la siguiente dirección: **[http://localhost:3000](http://localhost:3000)**
+La aplicación estará disponible en tu navegador en: **[http://localhost:3000](http://localhost:3000)**
 
 ### Credenciales de Acceso
 
-Una vez que la aplicación esté en marcha, puedes iniciar sesión con el siguiente usuario de prueba creado por el script de `seeds`:
+El script de `seeds` crea dos tipos de usuarios para que puedas probar los diferentes roles:
 
--   **Usuario:** `test@example.com`
--   **Contraseña:** `password`
+#### Rol de Administrador
+Tiene acceso a todas las funcionalidades del sistema (crear/editar/eliminar todo).
+-   **Usuario:** `superadmin@gmail.com`
+-   **Contraseña:** `superpassword`
+
+#### Rol de Usuario Estándar
+Solo puede ver la lista de artículos que tiene asignados.
+-   **Usuario:** `juan.perez@example.com`
+-   **Contraseña:** `password123`
 
 ---
 
 ## Calidad y Rendimiento
 
-El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos estándares de calidad en las áreas clave de la web. Los resultados demuestran un rendimiento excelente y el cumplimiento de las mejores prácticas modernas.
+El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos estándares de calidad en las áreas clave de la web.
 
 ![Resultados de Lighthouse para Inventory System](.github/assets/lighthouse.png)
 
@@ -87,56 +104,30 @@ El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos es
 
 ## Flujo de Trabajo de Desarrollo
 
--   **Ejecutar la suite de pruebas:**
-    Para verificar que toda la aplicación funciona correctamente después de realizar cambios, ejecuta la suite de pruebas completa. Todos los tests deben pasar.
-    ```bash
-    docker compose run --rm web rails test
-    ```
-
--   **Ejecutar otros comandos de Rails:**
-    Para la mayoría de las tareas de desarrollo (consola, generadores, migraciones, etc.), utiliza el prefijo `docker compose run --rm web`:
+-   **Ejecutar comandos de Rails:**
+    Para la mayoría de las tareas (consola, generadores, migraciones), utiliza el prefijo `docker compose exec web`. Esto asegura que el comando se ejecute dentro del contenedor de la aplicación en ejecución.
     ```bash
     # Abrir la consola de Rails
-    docker compose run --rm web rails c
+    docker compose exec web rails c
+
+    # Ejecutar la suite de pruebas
+    docker compose exec web rails test
 
     # Crear una nueva migración
-    docker compose run --rm web rails g migration AddDetailsToArticulos
+    docker compose exec web rails g migration AddDetailsToArticulos
     ```
 
--   **Para detener la aplicación**, presiona `Ctrl + C` en la terminal donde ejecutaste `docker compose up`.
+-   **Para detener la aplicación**, presiona `Ctrl + C` en la terminal donde ejecutaste `docker compose up`. Si la ejecutaste en segundo plano (`-d`), usa `docker compose down`.
 
-## Diseño y Planificación
-
-### Modelo de Datos (Entidad-Relación)
-
-El sistema se estructura en torno a 5 modelos principales:
-
--   `Marca`: Contiene el nombre de un fabricante (ej. Apple, Samsung).
-    -   `has_many :modelos`
--   `Modelo`: Representa un producto específico de una marca (ej. MacBook Pro 16).
-    -   `belongs_to :marca`
-    -   `has_many :articulos`
--   `Persona`: Representa a un individuo que puede poseer artículos.
-    -   `has_many :articulos` (los que posee actualmente)
-    -   `has_many :transferencias`
--   `Articulo`: Una instancia física única de un modelo.
-    -   `belongs_to :modelo`
-    -   `belongs_to :persona` (el portador actual)
-    -   `has_many :transferencias`
--   `Transferencia`: Registra el evento de un artículo siendo asignado a una persona en un momento específico.
-    -   `belongs_to :articulo`
-    -   `belongs_to :persona`
-
-### Planificación del Proyecto (Checklist)
+## Planificación del Proyecto (Checklist)
 
 - [x] Configuración inicial del proyecto con Rails 8 y Docker.
 - [x] Creación de modelos y migraciones de base de datos.
-- [x] Scaffolding básico para Artículos y Personas.
-- [x] Implementación de datos de prueba (seeds).
 - [x] Lógica de negocio principal: Módulo de Transferencias.
 - [x] Refinamiento de vistas para mostrar historiales.
 - [x] Implementación de ABM de Marcas y Modelos.
-- [x] Integración de Tailwind CSS, Flowbite y Alpine.js.
-- [x] Implementación de modo oscuro y UI responsiva.
+- [x] Integración de Tailwind CSS y UI responsiva con modo oscuro.
 - [x] Implementación de sistema de autenticación de usuarios.
-- [x] Pruebas unitarias (Minitest).
+- [x] Integración de IA para importación de modelos desde imágenes.
+- [x] Implementación de sistema de roles y permisos (Admin/Usuario) con Pundit.
+- [x] Pruebas unitarias y de integración (Minitest).

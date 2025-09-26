@@ -1,3 +1,4 @@
+
 puts "Limpiando la base de datos..."
 Session.destroy_all
 Transferencia.destroy_all
@@ -6,15 +7,19 @@ User.destroy_all
 Persona.destroy_all
 Modelo.destroy_all
 Marca.destroy_all
+puts "Base de datos limpia."
 
-puts "Creando Usuario de Prueba..."
+puts "\n--- Creando Superadmin ---"
+
 User.create!(
-  email_address: 'test@example.com',
-  password: 'password',
-  password_confirmation: 'password'
+  email_address: 'superadmin@gmail.com',
+  password: 'superpassword',
+  password_confirmation: 'superpassword',
+  admin: true 
 )
+puts "Usuario Superadmin creado."
 
-puts "Creando Marcas y Modelos..."
+puts "\n--- Creando Marcas y Modelos ---"
 apple = Marca.create!(nombre: "Apple")
 samsung = Marca.create!(nombre: "Samsung")
 dell = Marca.create!(nombre: "Dell")
@@ -24,37 +29,53 @@ Modelo.create!(marca: apple, nombre: "iPhone 15 Pro")
 Modelo.create!(marca: samsung, nombre: "Galaxy S24 Ultra")
 Modelo.create!(marca: dell, nombre: "XPS 15")
 Modelo.create!(marca: dell, nombre: "Latitude 7420")
+puts "Marcas y modelos creados."
 
-puts "Creando Personas y Artículos..."
+puts "\n--- Creando Personas y sus Cuentas de Usuario (Usuarios Normales) ---"
+
+
 juan = Persona.create!(nombre: "Juan", apellido: "Perez")
-maria = Persona.create!(nombre: "Maria", apellido: "Gomez")
-carlos = Persona.create!(nombre: "Carlos", apellido: "Rodriguez")
+User.create!(
+  email_address: 'juan.perez@example.com',
+  password: 'password123',
+  password_confirmation: 'password123',
+  persona: juan 
+)
+puts "Creada Persona y User para Juan Perez."
 
+
+maria = Persona.create!(nombre: "Maria", apellido: "Gomez")
+User.create!(
+  email_address: 'maria.gomez@example.com',
+  password: 'password123',
+  password_confirmation: 'password123',
+  persona: maria  
+)
+puts "Creada Persona y User para Maria Gomez."
+
+carlos = Persona.create!(nombre: "Carlos", apellido: "Rodriguez")
+User.create!(
+  email_address: 'carlos.r@example.com',
+  password: 'password123',
+  password_confirmation: 'password123',
+  persona: carlos 
+)
+puts "Creada Persona y User para Carlos Rodriguez."
+
+puts "\n--- Asignando Artículos ---"
 macbook = Articulo.create!(modelo: Modelo.find_by(nombre: "MacBook Pro 16"), fecha_ingreso: Date.today - 30, persona: juan)
 Transferencia.create!(articulo: macbook, persona: juan)
 
 iphone = Articulo.create!(modelo: Modelo.find_by(nombre: "iPhone 15 Pro"), fecha_ingreso: Date.today - 15, persona: juan)
 Transferencia.create!(articulo: iphone, persona: juan)
 
-galaxy = Articulo.create!(modelo: Modelo.find_by(nombre: "Galaxy S24 Ultra"), fecha_ingreso: Date.today - 5, persona: maria)
-Transferencia.create!(articulo: galaxy, persona: maria)
+galaxy = Articulo.create!(modelo: Modelo.find_by(nombre: "Galaxy S24 Ultra"), fecha_ingreso: Date.today - 5, persona: carlos)
+Transferencia.create!(articulo: galaxy, persona: carlos)
+puts "Artículos asignados."
 
-dell_xps = Articulo.create!(
-  modelo: Modelo.find_by(nombre: "XPS 15"),
-  fecha_ingreso: Date.today - 60,
-  persona: carlos
-)
-Transferencia.create!(articulo: dell_xps, persona: carlos)
-
-dell_latitude = Articulo.create!(
-  modelo: Modelo.find_by(nombre: "Latitude 7420"),
-  fecha_ingreso: Date.today - 90,
-  persona: carlos
-)
-Transferencia.create!(articulo: dell_latitude, persona: carlos)
-
-puts "Realizando una transferencia de ejemplo..."
+puts "\n--- Realizando una transferencia de ejemplo ---"
 macbook.update!(persona: maria)
 Transferencia.create!(articulo: macbook, persona: maria)
+puts "Transferencia de MacBook a Maria Gomez completada."
 
-puts "Base de datos inicializada con datos de ejemplo."
+puts "\nBase de datos inicializada con datos de ejemplo y roles conectados."
