@@ -20,6 +20,10 @@ gem "jbuilder"
 gem "httparty"
 # Use Redis adapter to run Action Cable in production
 
+
+gem 'caxlsx'
+gem 'caxlsx_rails'
+
 gem "pundit"
 # Authorization through policies 
 

@@ -10,6 +10,7 @@ Aplicación web desarrollada con Ruby on Rails 8 para la gestión de artículos,
 - **ABM de Marcas y Modelos:** Módulos dedicados para gestionar las marcas y modelos disponibles.
 - **Importación con IA:** Funcionalidad para crear Marcas y Modelos a partir de una imagen del producto, utilizando una API de IA para extraer la información.
 - **Sistema de Roles y Permisos:** Distinción entre usuarios Administradores (con acceso total) y usuarios Estándar (con vista restringida a sus propios artículos).
+- **Historial Global y Exportación:** Módulo de auditoría para administradores que muestra todas las transferencias del sistema y permite exportar los datos a formato Excel (.xlsx).
 - **Autenticación de Usuarios:** Sistema de registro, inicio de sesión e invitación para proteger el acceso a la aplicación.
 - **Interfaz Moderna y Responsiva:** UI desarrollada con Tailwind CSS, incluyendo un modo oscuro.
 
@@ -17,6 +18,7 @@ Aplicación web desarrollada con Ruby on Rails 8 para la gestión de artículos,
 
 - **Backend:** Ruby on Rails 8, Pundit (para autorización).
 - **Base de Datos:** SQLite 3
+- **Exportación de Datos:** `caxlsx_rails` para la generación de archivos Excel.
 - **Frontend:**
   - Hotwire (Turbo & Stimulus)
   - Tailwind CSS
@@ -57,12 +59,12 @@ Este proyecto está diseñado para ejecutarse dentro de contenedores de Docker. 
     ```
 
 4.  **Crear y preparar la base de datos:**
-    Estos comandos se ejecutan dentro del contenedor de la aplicación.
+    Estos comandos se ejecutan dentro del contenedor de la aplicación y pueblan la base de datos con datos de ejemplo.
     ```bash
     docker compose run --rm web rails db:prepare
     docker compose run --rm web rails db:seed
     ```
-    *(Nota: `db:prepare` es un atajo que crea la base de datos, ejecuta las migraciones y restaura el esquema si es necesario).*
+    *(Nota: `db:prepare` crea la base de datos y ejecuta las migraciones).*
 
 5.  **Iniciar la aplicación:**
     ```bash
@@ -114,7 +116,7 @@ El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos es
     docker compose exec web rails test
 
     # Crear una nueva migración
-    docker compose exec web rails g migration AddDetailsToArticulos
+    docker compose exec web rails g migration NombredelaMigracion
     ```
 
 -   **Para detener la aplicación**, presiona `Ctrl + C` en la terminal donde ejecutaste `docker compose up`. Si la ejecutaste en segundo plano (`-d`), usa `docker compose down`.
@@ -130,4 +132,5 @@ El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos es
 - [x] Implementación de sistema de autenticación de usuarios.
 - [x] Integración de IA para importación de modelos desde imágenes.
 - [x] Implementación de sistema de roles y permisos (Admin/Usuario) con Pundit.
+- [x] Módulo de historial global con exportación a Excel.
 - [x] Pruebas unitarias y de integración (Minitest).
