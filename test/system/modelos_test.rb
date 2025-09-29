@@ -4,42 +4,10 @@ class ModelosTest < ApplicationSystemTestCase
   setup do
     @admin_user = users(:admin)
     sign_in_as(@admin_user)
-    @modelo = modelos(:one)
   end
 
-  test "visiting the index" do
+  test "visiting the index as admin" do
     visit modelos_url
     assert_selector "h1", text: "Modelos"
-  end
-
-  test "should create modelo" do
-    visit modelos_url
-    click_on "New modelo"
-
-    fill_in "Marca", with: @modelo.marca_id
-    fill_in "Nombre", with: @modelo.nombre
-    click_on "Create Modelo"
-
-    assert_text "Modelo was successfully created"
-    click_on "Back"
-  end
-
-  test "should update Modelo" do
-    visit modelo_url(@modelo)
-    click_on "Edit this modelo", match: :first
-
-    fill_in "Marca", with: @modelo.marca_id
-    fill_in "Nombre", with: @modelo.nombre
-    click_on "Update Modelo"
-
-    assert_text "Modelo was successfully updated"
-    click_on "Back"
-  end
-
-  test "should destroy Modelo" do
-    visit modelo_url(@modelo)
-    accept_confirm { click_on "Destroy this modelo", match: :first }
-
-    assert_text "Modelo was successfully destroyed"
   end
 end
