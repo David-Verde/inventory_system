@@ -2,6 +2,8 @@ require "application_system_test_case"
 
 class ArticulosTest < ApplicationSystemTestCase
   setup do
+    @admin_user = users(:admin)
+    sign_in_as(@admin_user)
     @articulo = articulos(:one)
   end
 

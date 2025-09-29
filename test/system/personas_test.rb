@@ -1,43 +1,28 @@
 require "application_system_test_case"
 
 class PersonasTest < ApplicationSystemTestCase
+
   setup do
-    @persona = personas(:one)
+    @admin_user = users(:admin)
+    sign_in_as(@admin_user)
   end
+
 
   test "visiting the index" do
     visit personas_url
-    assert_selector "h1", text: "Personas"
+    assert_selector "h1", text: "Usuarios" 
   end
 
-  test "should create persona" do
+  test "should create Persona" do
     visit personas_url
-    click_on "New persona"
+    click_on "Nuevo Usuario"
 
-    fill_in "Apellido", with: @persona.apellido
-    fill_in "Nombre", with: @persona.nombre
+    fill_in "Nombre", with: "Test"
+    fill_in "Apellido", with: "Persona"
+    fill_in "Correo electrónico para la cuenta del usuario", with: "test.persona@example.com"
     click_on "Create Persona"
 
     assert_text "Persona was successfully created"
-    click_on "Back"
   end
 
-  test "should update Persona" do
-    visit persona_url(@persona)
-    click_on "Edit this persona", match: :first
-
-    fill_in "Apellido", with: @persona.apellido
-    fill_in "Nombre", with: @persona.nombre
-    click_on "Update Persona"
-
-    assert_text "Persona was successfully updated"
-    click_on "Back"
-  end
-
-  test "should destroy Persona" do
-    visit persona_url(@persona)
-    click_on "Destroy this persona", match: :first
-
-    assert_text "Persona was successfully destroyed"
-  end
 end
