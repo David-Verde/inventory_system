@@ -93,7 +93,7 @@ Solo puede ver la lista de artículos que tiene asignados.
 
 El proyecto se ha auditado utilizando Google Lighthouse para garantizar altos estándares de calidad en las áreas clave de la web.
 
-![Resultados de Lighthouse para Inventory System](.github/assets/lighthouse.png)
+![Resultados de Lighthouse para Inventory System](.github/assets/lighthouse.png).
 
 | Métrica          | Puntuación |
 | ---------------- | :--------: |
