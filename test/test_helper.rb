@@ -17,5 +17,5 @@ end
 
 
 class ActionDispatch::IntegrationTest
-  include AuthenticationHelper
+  include AuthenticationHelpers
 end

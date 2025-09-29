@@ -2,17 +2,21 @@ class PersonasController < ApplicationController
   before_action :set_persona, only: %i[ show edit update destroy ]
 
   def index
-    @personas = Persona.all
+    authorize Persona
+    @personas = policy_scope(Persona)
   end
 
   def show
+    authorize @persona
   end
 
   def new
     @persona = Persona.new
+    authorize @persona
   end
 
   def edit
+    authorize @persona
   end
 
   def create
@@ -49,6 +53,7 @@ class PersonasController < ApplicationController
   end
 
   def update
+    authorize @persona
     respond_to do |format|
       if @persona.update(persona_params)
         format.html { redirect_to @persona, notice: "Persona was successfully updated.", status: :see_other }
@@ -61,6 +66,7 @@ class PersonasController < ApplicationController
   end
 
   def destroy
+    authorize @persona
     @persona.destroy!
 
     respond_to do |format|

@@ -1,7 +1,9 @@
 class Persona < ApplicationRecord
   has_many :articulos, dependent: :nullify
   has_many :transferencias, dependent: :destroy
-  has_one :user
+
+  has_one :user, dependent: :destroy
+
 
   def nombre_completo
     "#{nombre} #{apellido}"
