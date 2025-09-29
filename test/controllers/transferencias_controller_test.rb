@@ -17,7 +17,7 @@ class TransferenciasControllerTest < ActionDispatch::IntegrationTest
     assert_difference "Transferencia.count" do
       post articulo_transferencias_url(@articulo), params: { transferencia: { persona_id: @nueva_persona.id } }
     end
-    
+
     @articulo.reload
     assert_equal @nueva_persona.id, @articulo.persona_id
     assert_redirected_to articulo_url(@articulo)

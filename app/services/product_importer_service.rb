@@ -5,7 +5,7 @@ class ProductImporterService
 
   def initialize(image_file)
     @image_file = image_file
-    @api_key = ENV['OPENROUTER_API_KEY']
+    @api_key = ENV["OPENROUTER_API_KEY"]
   end
 
   def call
@@ -77,6 +77,6 @@ class ProductImporterService
   private
 
   def valid_image?
-    @image_file.present? && @image_file.content_type.start_with?('image/')
+    @image_file.present? && @image_file.content_type.start_with?("image/")
   end
 end

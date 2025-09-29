@@ -7,16 +7,16 @@ class MarcasController < ApplicationController
   end
 
   def show
-    authorize @marca 
+    authorize @marca
   end
 
   def new
     @marca = Marca.new
-    authorize @marca 
+    authorize @marca
   end
 
   def edit
-    authorize @marca 
+    authorize @marca
   end
 
   def create
@@ -35,7 +35,7 @@ class MarcasController < ApplicationController
   end
 
   def update
-    authorize @marca 
+    authorize @marca
     respond_to do |format|
       if @marca.update(marca_params)
         format.html { redirect_to @marca, notice: "Marca was successfully updated.", status: :see_other }
@@ -48,7 +48,7 @@ class MarcasController < ApplicationController
   end
 
   def destroy
-    authorize @marca 
+    authorize @marca
     @marca.destroy!
 
     respond_to do |format|

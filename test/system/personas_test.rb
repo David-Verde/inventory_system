@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class PersonasTest < ApplicationSystemTestCase
-
   setup do
     @admin_user = users(:admin)
     sign_in_as(@admin_user)
@@ -10,7 +9,7 @@ class PersonasTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit personas_url
-    assert_selector "h1", text: "Usuarios" 
+    assert_selector "h1", text: "Usuarios"
   end
 
   test "should create Persona" do
@@ -24,5 +23,4 @@ class PersonasTest < ApplicationSystemTestCase
 
     assert_text "Persona was successfully created"
   end
-
 end

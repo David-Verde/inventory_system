@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :transferencias, only: [ :new, :create ]
   end
   resources :personas
-  
+
   post "image_imports", to: "image_imports#create"
 
   # NUEVA RUTA para el historial global

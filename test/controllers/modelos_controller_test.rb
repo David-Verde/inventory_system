@@ -25,7 +25,7 @@ class ModelosControllerTest < ActionDispatch::IntegrationTest
   test "admin can destroy a modelo" do
     login_as(@admin_user)
     modelo_a_borrar = Modelo.create!(nombre: "Para Borrar", marca: marcas(:dell))
-    modelo_a_borrar.articulos.destroy_all 
+    modelo_a_borrar.articulos.destroy_all
     assert_difference("Modelo.count", -1) do
       delete modelo_url(modelo_a_borrar)
     end

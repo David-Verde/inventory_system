@@ -24,7 +24,7 @@ class ImageImportsController < ApplicationController
 
         modelo_existente_similar = marca.modelos.find do |modelo|
           nombre_normalizado_existente = normalize_name(modelo.nombre)
-          nombre_normalizado_existente.include?(nombre_normalizado_candidato) || 
+          nombre_normalizado_existente.include?(nombre_normalizado_candidato) ||
           nombre_normalizado_candidato.include?(nombre_normalizado_existente)
         end
 
@@ -43,6 +43,6 @@ class ImageImportsController < ApplicationController
   private
 
   def normalize_name(name)
-    name.to_s.downcase.gsub(/\s+/, ' ').strip
+    name.to_s.downcase.gsub(/\s+/, " ").strip
   end
 end

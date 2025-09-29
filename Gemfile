@@ -21,11 +21,11 @@ gem "httparty"
 # Use Redis adapter to run Action Cable in production
 
 
-gem 'caxlsx'
-gem 'caxlsx_rails'
+gem "caxlsx"
+gem "caxlsx_rails"
 
 gem "pundit"
-# Authorization through policies 
+# Authorization through policies
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"

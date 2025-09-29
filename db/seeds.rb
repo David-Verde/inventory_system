@@ -15,7 +15,7 @@ User.create!(
   email_address: 'superadmin@gmail.com',
   password: 'superpassword',
   password_confirmation: 'superpassword',
-  admin: true 
+  admin: true
 )
 puts "Usuario Superadmin creado."
 
@@ -39,7 +39,7 @@ User.create!(
   email_address: 'juan.perez@example.com',
   password: 'password123',
   password_confirmation: 'password123',
-  persona: juan 
+  persona: juan
 )
 puts "Creada Persona y User para Juan Perez."
 
@@ -49,7 +49,7 @@ User.create!(
   email_address: 'maria.gomez@example.com',
   password: 'password123',
   password_confirmation: 'password123',
-  persona: maria  
+  persona: maria
 )
 puts "Creada Persona y User para Maria Gomez."
 
@@ -58,7 +58,7 @@ User.create!(
   email_address: 'carlos.r@example.com',
   password: 'password123',
   password_confirmation: 'password123',
-  persona: carlos 
+  persona: carlos
 )
 puts "Creada Persona y User para Carlos Rodriguez."
 

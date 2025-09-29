@@ -1,9 +1,8 @@
 module AuthenticationHelpers
-
   def sign_in_as(user)
     visit new_session_path
     fill_in "Correo electrónico", with: user.email_address
-    fill_in "Password", with: 'password'
+    fill_in "Password", with: "password"
     click_on "Sign in"
   end
 

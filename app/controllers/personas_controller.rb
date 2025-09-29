@@ -27,9 +27,9 @@ class PersonasController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @persona.save!
-      
+
       random_password = SecureRandom.hex(16)
-      
+
       user = User.create!(
         email_address: email,
         persona: @persona,

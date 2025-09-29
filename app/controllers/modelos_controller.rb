@@ -3,25 +3,25 @@ class ModelosController < ApplicationController
 
   def index
     authorize Modelo
-    @modelos = policy_scope(Modelo) 
+    @modelos = policy_scope(Modelo)
   end
 
   def show
-    authorize @modelo 
+    authorize @modelo
   end
 
   def new
     @modelo = Modelo.new
-    authorize @modelo 
+    authorize @modelo
   end
 
   def edit
-    authorize @modelo 
+    authorize @modelo
   end
 
   def create
     @modelo = Modelo.new(modelo_params)
-    authorize @modelo 
+    authorize @modelo
 
     respond_to do |format|
       if @modelo.save
@@ -35,7 +35,7 @@ class ModelosController < ApplicationController
   end
 
   def update
-    authorize @modelo 
+    authorize @modelo
     respond_to do |format|
       if @modelo.update(modelo_params)
         format.html { redirect_to @modelo, notice: "Modelo was successfully updated.", status: :see_other }
@@ -48,7 +48,7 @@ class ModelosController < ApplicationController
   end
 
   def destroy
-    authorize @modelo 
+    authorize @modelo
     @modelo.destroy!
 
     respond_to do |format|

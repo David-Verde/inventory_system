@@ -57,7 +57,7 @@ class ArticulosController < ApplicationController
   # DELETE /articulos/1 or /articulos/1.json
   def destroy
     authorize @articulo # Verifica si el usuario puede eliminar
-    
+
     @articulo.destroy!
 
     respond_to do |format|

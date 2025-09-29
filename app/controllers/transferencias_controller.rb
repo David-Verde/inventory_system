@@ -8,7 +8,7 @@ class TransferenciasController < ApplicationController
 
   def create
     nueva_persona = Persona.find(transferencia_params[:persona_id])
-    
+
     ActiveRecord::Base.transaction do
       Transferencia.create!(
         articulo: @articulo,

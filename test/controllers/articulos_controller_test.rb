@@ -5,7 +5,7 @@ class ArticulosControllerTest < ActionDispatch::IntegrationTest
     @admin = users(:admin)
     @regular_user = users(:regular)
     @regular_user_article = articulos(:one)
-    @admin_article = articulos(:two)   
+    @admin_article = articulos(:two)
   end
 
   test "unauthenticated user is redirected from index" do
@@ -30,7 +30,7 @@ class ArticulosControllerTest < ActionDispatch::IntegrationTest
   test "regular user is redirected when trying to see another's article" do
     login_as(@regular_user)
     get articulo_url(@admin_article)
-    assert_redirected_to root_url 
+    assert_redirected_to root_url
   end
 
   test "regular user is redirected from new article page" do
