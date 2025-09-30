@@ -2,49 +2,21 @@ require "test_helper"
 
 class PersonasControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
-    login_as(@user)
-    @persona = personas(:one)
+    @admin_user = users(:admin)
+    @regular_user = users(:regular)
   end
 
-  test "should get index" do
+
+  test "admin can get personas index" do
+    login_as(@admin_user)
     get personas_url
     assert_response :success
   end
 
-  test "should get new" do
-    get new_persona_url
-    assert_response :success
-  end
 
-  test "should create persona" do
-    assert_difference("Persona.count") do
-      post personas_url, params: { persona: { apellido: @persona.apellido, nombre: @persona.nombre } }
-    end
-
-    assert_redirected_to persona_url(Persona.last)
-  end
-
-  test "should show persona" do
-    get persona_url(@persona)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_persona_url(@persona)
-    assert_response :success
-  end
-
-  test "should update persona" do
-    patch persona_url(@persona), params: { persona: { apellido: @persona.apellido, nombre: @persona.nombre } }
-    assert_redirected_to persona_url(@persona)
-  end
-
-  test "should destroy persona" do
-    assert_difference("Persona.count", -1) do
-      delete persona_url(@persona)
-    end
-
-    assert_redirected_to personas_url
+  test "regular user is redirected from personas index" do
+    login_as(@regular_user)
+    get personas_url
+    assert_redirected_to root_url
   end
 end

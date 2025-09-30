@@ -1,0 +1,28 @@
+
+wb = xlsx_package.workbook
+
+
+wb.add_worksheet(name: "Historial de Transferencias") do |sheet|
+  header_style = sheet.styles.add_style(b: true)
+
+
+  sheet.add_row [
+    "Fecha y Hora",
+    "Marca",
+    "Modelo",
+    "Usuario Asignado",
+    "ID Artículo",
+    "ID Persona"
+  ], style: header_style
+
+  @transferencias.each do |transferencia|
+    sheet.add_row [
+      transferencia.created_at,
+      transferencia.articulo.modelo.marca.nombre,
+      transferencia.articulo.modelo.nombre,
+      transferencia.persona.nombre_completo,
+      transferencia.articulo_id,
+      transferencia.persona_id
+    ]
+  end
+end

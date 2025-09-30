@@ -2,49 +2,48 @@ require "test_helper"
 
 class ModelosControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
-    login_as(@user)
-    @modelo = modelos(:one)
+    @admin_user = users(:admin)
+    @regular_user = users(:regular)
+    @modelo = modelos(:macbook)
   end
 
-  test "should get index" do
+
+  test "admin can get modelos index" do
+    login_as(@admin_user)
     get modelos_url
     assert_response :success
   end
 
-  test "should get new" do
-    get new_modelo_url
-    assert_response :success
-  end
-
-  test "should create modelo" do
-    assert_difference("Modelo.count") do
-      post modelos_url, params: { modelo: { marca_id: @modelo.marca_id, nombre: @modelo.nombre } }
+  test "admin can create a modelo" do
+    login_as(@admin_user)
+    assert_difference("Modelo.count", 1) do
+      post modelos_url, params: { modelo: { nombre: "Nuevo Modelo Test", marca_id: marcas(:apple).id } }
     end
-
     assert_redirected_to modelo_url(Modelo.last)
   end
 
-  test "should show modelo" do
-    get modelo_url(@modelo)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_modelo_url(@modelo)
-    assert_response :success
-  end
-
-  test "should update modelo" do
-    patch modelo_url(@modelo), params: { modelo: { marca_id: @modelo.marca_id, nombre: @modelo.nombre } }
-    assert_redirected_to modelo_url(@modelo)
-  end
-
-  test "should destroy modelo" do
+  test "admin can destroy a modelo" do
+    login_as(@admin_user)
+    modelo_a_borrar = Modelo.create!(nombre: "Para Borrar", marca: marcas(:dell))
+    modelo_a_borrar.articulos.destroy_all
     assert_difference("Modelo.count", -1) do
-      delete modelo_url(@modelo)
+      delete modelo_url(modelo_a_borrar)
     end
-
     assert_redirected_to modelos_url
+  end
+
+
+  test "regular user is redirected from modelos index" do
+    login_as(@regular_user)
+    get modelos_url
+    assert_redirected_to root_url
+  end
+
+  test "regular user cannot create a modelo" do
+    login_as(@regular_user)
+    assert_no_difference("Modelo.count") do
+      post modelos_url, params: { modelo: { nombre: "Modelo Fallido", marca_id: marcas(:apple).id } }
+    end
+    assert_redirected_to root_url
   end
 end

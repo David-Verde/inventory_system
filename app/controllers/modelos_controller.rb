@@ -1,27 +1,27 @@
 class ModelosController < ApplicationController
   before_action :set_modelo, only: %i[ show edit update destroy ]
 
-  # GET /modelos or /modelos.json
   def index
-    @modelos = Modelo.all
+    authorize Modelo
+    @modelos = policy_scope(Modelo)
   end
 
-  # GET /modelos/1 or /modelos/1.json
   def show
+    authorize @modelo
   end
 
-  # GET /modelos/new
   def new
     @modelo = Modelo.new
+    authorize @modelo
   end
 
-  # GET /modelos/1/edit
   def edit
+    authorize @modelo
   end
 
-  # POST /modelos or /modelos.json
   def create
     @modelo = Modelo.new(modelo_params)
+    authorize @modelo
 
     respond_to do |format|
       if @modelo.save
@@ -34,8 +34,8 @@ class ModelosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /modelos/1 or /modelos/1.json
   def update
+    authorize @modelo
     respond_to do |format|
       if @modelo.update(modelo_params)
         format.html { redirect_to @modelo, notice: "Modelo was successfully updated.", status: :see_other }
@@ -47,8 +47,8 @@ class ModelosController < ApplicationController
     end
   end
 
-  # DELETE /modelos/1 or /modelos/1.json
   def destroy
+    authorize @modelo
     @modelo.destroy!
 
     respond_to do |format|
@@ -58,12 +58,10 @@ class ModelosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_modelo
       @modelo = Modelo.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def modelo_params
       params.expect(modelo: [ :nombre, :marca_id ])
     end

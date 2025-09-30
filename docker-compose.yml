@@ -1,21 +1,20 @@
-# docker-compose.yml
-
 version: '3.8'
 
 services:
   web:
     build: .
-  
-
-    
-
+    command: ./bin/dev
     volumes:
       - .:/rails
-      
-
     ports:
       - "3000:3000"
-      
-
+    depends_on:
+      - chrome
+    environment:
+      SELENIUM_URL: http://chrome:4444/wd/hub
     stdin_open: true
     tty: true
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2g

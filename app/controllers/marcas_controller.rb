@@ -1,27 +1,27 @@
 class MarcasController < ApplicationController
   before_action :set_marca, only: %i[ show edit update destroy ]
 
-  # GET /marcas or /marcas.json
   def index
-    @marcas = Marca.all
+    authorize Marca
+    @marcas = policy_scope(Marca)
   end
 
-  # GET /marcas/1 or /marcas/1.json
   def show
+    authorize @marca
   end
 
-  # GET /marcas/new
   def new
     @marca = Marca.new
+    authorize @marca
   end
 
-  # GET /marcas/1/edit
   def edit
+    authorize @marca
   end
 
-  # POST /marcas or /marcas.json
   def create
     @marca = Marca.new(marca_params)
+    authorize @marca
 
     respond_to do |format|
       if @marca.save
@@ -34,8 +34,8 @@ class MarcasController < ApplicationController
     end
   end
 
-  # PATCH/PUT /marcas/1 or /marcas/1.json
   def update
+    authorize @marca
     respond_to do |format|
       if @marca.update(marca_params)
         format.html { redirect_to @marca, notice: "Marca was successfully updated.", status: :see_other }
@@ -47,8 +47,8 @@ class MarcasController < ApplicationController
     end
   end
 
-  # DELETE /marcas/1 or /marcas/1.json
   def destroy
+    authorize @marca
     @marca.destroy!
 
     respond_to do |format|
@@ -58,12 +58,10 @@ class MarcasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_marca
       @marca = Marca.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def marca_params
       params.expect(marca: [ :nombre ])
     end
