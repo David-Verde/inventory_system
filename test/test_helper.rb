@@ -6,7 +6,6 @@ require "rails/test_help"
 Dir[Rails.root.join("test/support/**/*.rb")].sort.each { |f| require f }
 
 class ActiveSupport::TestCase
-
   parallelize(workers: :number_of_processors)
 
 

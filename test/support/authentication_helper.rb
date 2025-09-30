@@ -1,5 +1,4 @@
 module AuthenticationHelpers
-
   def sign_in_as(user)
     visit new_session_url
     fill_in "Correo electrónico", with: user.email_address
